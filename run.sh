@@ -1,36 +1,32 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # Usage:
 #   ./run.sh <function name>
-
 
 set -o nounset
 set -o pipefail
 set -o errexit
 
-# Use ~/git/dreamhost/flask/dreamhost.sh to build Python
-
-readonly PY=Python-3.9.1
-
-py3() {
-  $HOME/opt/$PY/bin/python3.9 "$@"
+# Requires virtualenv to be active
+serve() {
+  FLASK_APP=main.py flask run
 }
 
-create-venv() {
-  py3 -m venv _venv
-}
+git-merge-to-master() {
+  local do_push=${1:-T}  # pass F to disable
 
-py-deps() {
-  . _venv/bin/activate
+  local branch=$(git rev-parse --abbrev-ref HEAD)
 
-  # Versions as of 1/2/2021
-  pip3 install 'flask==1.1.2' 'flup==1.0.3'
-}
-
-deploy() {
-  local dir=~/dr.shxa.org/hashdiv
-  mkdir -p $dir
-  cp -v .htaccess dispatch.fcgi $dir
+  if test "$do_push" = T; then
+    git checkout master &&
+    git merge $branch &&
+    git push &&
+    git checkout $branch
+  else
+    git checkout master &&
+    git merge $branch &&
+    git checkout $branch
+  fi
 }
 
 "$@"
