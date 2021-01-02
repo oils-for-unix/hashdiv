@@ -3,7 +3,27 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-  <h1>Index</h1>
-  <p class="important">
-    Welcome on my awesome homepage.
+
+<form action="snip" method="GET">
+  <table>
+    <tr>
+      <td>URL</td>
+      <td><input type="text" name="url" /></td>
+    </tr>
+    <tr>
+      <td>starting line number</td>
+      <td><input type="text" name="start" /></td>
+    </tr>
+    <tr>
+      <td>ending line number</td>
+      <td><input type="text" name="end" /></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td><input type="submit" /></td>
+    </tr>
+  </table>
+</form>
+
 {% endblock %}
