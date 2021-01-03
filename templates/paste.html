@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+<pre>
+{{ data }}
+</pre>
+
+
+{% if show_iframe %}
+  {# sandbox prevents alert("hi"); etc. #}
+  <iframe width=600 src="{{filename}}" sandbox>
+  </iframe>
+{% endif %}
+
+{% endblock %}

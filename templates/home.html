@@ -4,7 +4,29 @@
 
 {% block content %}
 
-<form action="snip" method="GET">
+<h1>Paste Text</h1>
+
+<form action="paste" method="POST">
+  <table>
+    <tr>
+      <td>Text Data</td>
+      <td><textarea name="data" rows=5 cols=80></textarea></td>
+    </tr>
+    <tr>
+      <td>Format</td>
+      <td><input type="text" name="format" /></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td><input type="submit" /></td>
+    </tr>
+  </table>
+</form>
+
+<h1>Code Snippet</h1>
+
+<form action="code-snippet" method="GET">
   <table>
     <tr>
       <td>URL</td>

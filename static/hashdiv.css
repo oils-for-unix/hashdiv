@@ -18,6 +18,10 @@ body {
   font-weight: bold;
 }
 
+h1 {
+  font-size: large;
+}
+
 /* Remove underline */
 a:link {
   text-decoration: none;

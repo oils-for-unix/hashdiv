@@ -30,6 +30,13 @@ deploy() {
   local dir=~/dr.shxa.org/hashdiv
   mkdir -p $dir
   cp -v .htaccess dispatch.fcgi $dir
+  
+  cd $dir
+  setup-dirs
+}
+
+setup-dirs() {
+  mkdir --verbose -p upload/{tmp,paste}
 }
 
 "$@"
