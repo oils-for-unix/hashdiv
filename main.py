@@ -14,6 +14,7 @@ Tools:
 
 from flask import Flask, request, render_template, Response, send_from_directory
 
+import glob
 import os
 import hashlib
 import tempfile
@@ -36,6 +37,9 @@ def get_paste(path):
 @app.route('/pastes')
 def list_pastes():
   names = os.listdir('upload/paste')
+
+  show_html = request.args.get('show_html')
+
   app.logger.debug('%s', names)
 
   pastes = []
@@ -44,14 +48,24 @@ def list_pastes():
     with open(rel_path) as f:
       data = f.read()
 
-    if name.endswith('.html'):
+    url = None
+    if show_html != '0' and name.endswith('.html'):
       url = rel_path
-    else:
-      url = None
 
     pastes.append({'data': data.rstrip(), 'url': url})
 
   return render_template('pastes.html', pastes=pastes)
+
+
+@app.route('/delete-pastes', methods=['POST'])
+def delete_pastes():
+  num_pastes = 0 
+  for name in glob.glob('upload/paste/*'):
+    app.logger.debug(name)
+    num_pastes += 1
+    os.unlink(name)
+
+  return 'Deleted %d pastes' % num_pastes
 
 
 @app.route('/paste', methods=['POST'])

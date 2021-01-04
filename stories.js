@@ -1,8 +1,5 @@
 // Run in browser devtools to scrape a rich story link
-//
-// TODO: Fix relative links to be absolute.
 
-// Not used yet
 function htmlToElement(html) {
   var template = document.createElement('template');
   template.innerHTML = html;
@@ -21,7 +18,7 @@ function lobstersHtml() {
   var date = submission_time.split(' ')[0];
 
   return `${link} (<code>${domain}</code> via lobste.rs) <br/>
-    <span class="line2">${score} points, ${comments_el.outerHTML} on ${date} </span>`;
+    ${score} points, ${comments_el.outerHTML} on ${date}`;
 }
 
 function hackerNewsHtml() {
@@ -41,7 +38,7 @@ function hackerNewsHtml() {
 
   var site = 'Hacker News';
   return `${link} (<code>${domain}</code> via ${site}) <br/>
-    <span class="line2">${score}, ${comments_el.outerHTML} - ${date} </span>`;
+    ${score}, ${comments_el.outerHTML} - ${date}`;
 }
 
 function oldRedditHtml() {
@@ -62,8 +59,10 @@ function oldRedditHtml() {
     where = `<code>${domain}</code> via ${site}`;
   } else {
     // User Discussion.  Link is in comments.
-    title = document.querySelector('a.title').innerHTML;
-    where = domain;  // self.ProgrammingLanguages
+    var title_str = document.querySelector('a.title').innerHTML;
+    var title = `<span class="title-without-link">${title_str}</span>`;
+    // self.ProgrammingLanguages -> /r/ProgrammingLanguages
+    where = domain.replace('self.', '/r/');
   }
 
   var comments = document.querySelector('a.comments').outerHTML;
@@ -72,7 +71,7 @@ function oldRedditHtml() {
 
   
   return `${title} (${where}) <br/>
-    <span class="line2">${score} points, ${comments} - ${date} </span>`;
+    ${score} points, ${comments} - ${date}`;
 }
 
 function storyHtml(url) {
@@ -107,11 +106,14 @@ if (links) {
   </form>
   </p>`;
 
-  var h = `
-  <span class="story">
-    ${links}  
-  </span>
-  `
+  console.log(links);
+
+  // This is meant to be embedded in CommonMark.
+  var h = `<div class="link-box">
+
+${links.replace(/\n/g, '')}
+
+</div>`;
 
   // Add escaped data to be POSTed
   document.body.insertAdjacentHTML('afterbegin', form);  
