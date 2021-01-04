@@ -2,55 +2,72 @@
 //
 // TODO: Fix relative links to be absolute.
 
-function lobstersHtml() {
-  var score = document.querySelectorAll('.score')[0].innerHTML;
-  var link = document.querySelectorAll('a.u-url')[0].outerHTML
-  var domain = document.querySelectorAll('a.domain')[0].innerHTML
-  var comments = document.querySelectorAll('span.comments_label a')[0].outerHTML;
+// Not used yet
+function htmlToElement(html) {
+  var template = document.createElement('template');
+  template.innerHTML = html;
+  return template.content.firstChild;
+}
 
-  var submission_time = document.querySelectorAll('div.byline span[title]')[0].title;
+function lobstersHtml() {
+  var score = document.querySelector('.score').innerHTML;
+  var link = document.querySelector('a.u-url').outerHTML;
+  var domain = document.querySelector('a.domain').innerHTML;
+  var comments_el = document.querySelector('span.comments_label a');
+
+  comments_el.setAttribute('href', 'https://lobste.rs' + comments_el.getAttribute('href'));
+
+  var submission_time = document.querySelector('div.byline span[title]').title;
   var date = submission_time.split(' ')[0];
 
   return `${link} (<code>${domain}</code> via lobste.rs) <br/>
-    <span class="link">${score} points, ${comments} on ${date} </span>`;
+    <span class="link">${score} points, ${comments_el.outerHTML} on ${date} </span>`;
 }
 
 function hackerNewsHtml() {
-  var subtext = document.querySelectorAll('td.subtext')[0];
-  var score = subtext.querySelectorAll('span')[0].innerHTML;
+  var subtext = document.querySelector('td.subtext');
+  var score = subtext.querySelector('span').innerHTML;
 
-  var link = document.querySelectorAll('a.storylink')[0].outerHTML;
-  var domain = document.querySelectorAll('span.sitestr')[0].innerHTML; 
+  var link = document.querySelector('a.storylink').outerHTML;
+  var domain = document.querySelector('span.sitestr').innerHTML; 
 
   var links = subtext.querySelectorAll('a');
-  var comments = links[links.length-1].outerHTML;
+  var comments_el = links[links.length-1];
+
+  // Add domain to the URL
+  comments_el.setAttribute('href', 'https://news.ycombinator.com/' + comments_el.getAttribute('href'));
 
   var date = links[1].innerHTML;
 
   var site = 'Hacker News';
   return `${link} (<code>${domain}</code> via ${site}) <br/>
-    <span class="link">${score}, ${comments} - ${date} </span>`;
+    <span class="link">${score}, ${comments_el.outerHTML} - ${date} </span>`;
 }
 
 function oldRedditHtml() {
-  var score = document.querySelectorAll('div.score')[0].innerHTML;
+  var score = document.querySelector('div.score').innerHTML;
  
-  var link = document.querySelectorAll('a.title')[0].outerHTML;
-
-  var domain = document.querySelectorAll('span.domain a')[0].innerHTML;
+  var domain = document.querySelector('span.domain a').innerHTML;
+  var site = 'Reddit';
+  
+  var title = '';
   var where = '';
   if (domain.indexOf('self.') == -1) {
+    // External Link
+    title = document.querySelector('a.title').outerHTML;    
     where = `<code>${domain}</code> via ${site}`;
   } else {
+    // User Discussion.  Link is in comments.
+    title = document.querySelector('a.title').innerHTML;
     where = domain;  // self.ProgrammingLanguages
   }
 
-  var comments = document.querySelectorAll('a.comments')[0].outerHTML;
+  var comments = document.querySelector('a.comments').outerHTML;
 
-  var date = document.querySelectorAll('time')[0].innerHTML;
+  var date = document.querySelector('time').innerHTML;
 
-  var site = 'Reddit';
-  return `${link} (${where}) <br/>
+  
+  return `${title} (${where}) <br/>
     <span class="link">${score}, ${comments} - ${date} </span>`;
 }
 
@@ -72,7 +89,7 @@ function storyHtml(url) {
 var links = storyHtml(window.location.href);
 if (links) {
   console.log(links);
-  document.body.insertAdjacentHTML('beforebegin', links);
+  document.body.insertAdjacentHTML('afterbegin', links);
 
   var post_url = "http://dr.shxa.org/hashdiv/paste";
   var post_url = "http://localhost:5000/paste";
@@ -96,4 +113,6 @@ if (links) {
   document.body.insertAdjacentHTML('afterbegin', form);  
   document.querySelectorAll('input#storyhtml')[0].setAttribute('value', h);
 }
+
+
 
