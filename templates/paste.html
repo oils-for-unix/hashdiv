@@ -1,18 +1,21 @@
 {% extends "layout.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Pasted This Data{% endblock %}
 
 {% block content %}
+
+<h1>Pasted This Data</h1>
 
 <pre>
 {{ data }}
 </pre>
-
 
 {% if show_iframe %}
   {# sandbox prevents alert("hi"); etc. #}
   <iframe width=600 src="{{filename}}" sandbox>
   </iframe>
 {% endif %}
+
+<p><a href=".">Back to home page</a></p>
 
 {% endblock %}

@@ -33,6 +33,27 @@ def get_paste(path):
   return send_from_directory('upload/paste', path)
 
 
+@app.route('/pastes')
+def list_pastes():
+  names = os.listdir('upload/paste')
+  app.logger.debug('%s', names)
+
+  pastes = []
+  for name in names:
+    rel_path = 'upload/paste/%s' % name
+    with open(rel_path) as f:
+      data = f.read()
+
+    if name.endswith('.html'):
+      url = rel_path
+    else:
+      url = None
+
+    pastes.append({'data': data.rstrip(), 'url': url})
+
+  return render_template('pastes.html', pastes=pastes)
+
+
 @app.route('/paste', methods=['POST'])
 def post_paste():
   """For scraping in JavaScript and posting here

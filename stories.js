@@ -21,7 +21,7 @@ function lobstersHtml() {
   var date = submission_time.split(' ')[0];
 
   return `${link} (<code>${domain}</code> via lobste.rs) <br/>
-    <span class="link">${score} points, ${comments_el.outerHTML} on ${date} </span>`;
+    <span class="line2">${score} points, ${comments_el.outerHTML} on ${date} </span>`;
 }
 
 function hackerNewsHtml() {
@@ -41,11 +41,11 @@ function hackerNewsHtml() {
 
   var site = 'Hacker News';
   return `${link} (<code>${domain}</code> via ${site}) <br/>
-    <span class="link">${score}, ${comments_el.outerHTML} - ${date} </span>`;
+    <span class="line2">${score}, ${comments_el.outerHTML} - ${date} </span>`;
 }
 
 function oldRedditHtml() {
-  var score = document.querySelector('div.score').innerHTML;
+  var score = document.querySelector('div.score span').innerHTML;
  
   var domain = document.querySelector('span.domain a').innerHTML;
   var site = 'Reddit';
@@ -53,8 +53,12 @@ function oldRedditHtml() {
   var title = '';
   var where = '';
   if (domain.indexOf('self.') == -1) {
-    // External Link
-    title = document.querySelector('a.title').outerHTML;    
+    // External Link.  Strip the "out.reddit.com" domain.    
+    var reddit_el = document.querySelector('a.title');
+    var our_el = htmlToElement(`<a href="">${reddit_el.innerHTML}</a>`);
+    our_el.setAttribute('href', reddit_el.getAttribute('data-href-url'));
+
+    title = our_el.outerHTML;
     where = `<code>${domain}</code> via ${site}`;
   } else {
     // User Discussion.  Link is in comments.
@@ -68,7 +72,7 @@ function oldRedditHtml() {
 
   
   return `${title} (${where}) <br/>
-    <span class="link">${score}, ${comments} - ${date} </span>`;
+    <span class="line2">${score} points, ${comments} - ${date} </span>`;
 }
 
 function storyHtml(url) {
@@ -104,15 +108,13 @@ if (links) {
   </p>`;
 
   var h = `
-  <div class="story">
+  <span class="story">
     ${links}  
-  </div>
+  </span>
   `
 
   // Add escaped data to be POSTed
   document.body.insertAdjacentHTML('afterbegin', form);  
   document.querySelectorAll('input#storyhtml')[0].setAttribute('value', h);
 }
-
-
 
