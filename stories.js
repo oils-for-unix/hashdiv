@@ -8,16 +8,32 @@ function htmlToElement(html) {
 
 function lobstersHtml() {
   var score = document.querySelector('.score').innerHTML;
-  var link = document.querySelector('a.u-url').outerHTML;
-  var domain = document.querySelector('a.domain').innerHTML;
-  var comments_el = document.querySelector('span.comments_label a');
 
-  comments_el.setAttribute('href', 'https://lobste.rs' + comments_el.getAttribute('href'));
+  var title = '';
+  var where = '';
+
+  var title_el = document.querySelector('a.u-url');
+  var domain_el = document.querySelector('a.domain');
+  if (domain_el) {
+    title = title_el.outerHTML;
+    var domain = domain_el.innerHTML;
+    where = `<code>${domain}</code> via lobste.rs`;
+  } else {
+    
+    title = `<span class="title-without-link">${title_el.innerHTML}</span>`;    
+    where = 'ask';
+  }
+  var comments_el = document.querySelector('span.comments_label a');
+  var comments_href = comments_el.getAttribute('href')
+
+  if (comments_href.indexOf('//lobste.rs') == -1) {
+    comments_el.setAttribute('href', 'https://lobste.rs' + comments_href);
+  }
 
   var submission_time = document.querySelector('div.byline span[title]').title;
   var date = submission_time.split(' ')[0];
 
-  return `${link} (<code>${domain}</code> via lobste.rs) <br/>
+  return `${title} (${where}) <br/>
     ${score} points, ${comments_el.outerHTML} on ${date}`;
 }
 
