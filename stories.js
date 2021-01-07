@@ -41,19 +41,33 @@ function hackerNewsHtml() {
   var subtext = document.querySelector('td.subtext');
   var score = subtext.querySelector('span').innerHTML;
 
-  var link = document.querySelector('a.storylink').outerHTML;
-  var domain = document.querySelector('span.sitestr').innerHTML; 
+  var title = '';
+  var where = '';
+
+  var title_el = document.querySelector('a.storylink')
+  var domain_el = document.querySelector('span.sitestr');
+
+  if (domain_el) {
+    title = title_el.outerHTML;
+    domain = domain_el.innerHTML; 
+    where = `<code>${domain}</code> via Hacker News`;
+  } else {
+    title = title_el.innerHTML;
+    where = 'self';    
+  }
 
   var links = subtext.querySelectorAll('a');
   var comments_el = links[links.length-1];
 
   // Add domain to the URL
-  comments_el.setAttribute('href', 'https://news.ycombinator.com/' + comments_el.getAttribute('href'));
+  var comments_href = comments_el.getAttribute('href');
+  if (comments_href.indexOf('//news.ycombinator.com') === -1) {
+    comments_el.setAttribute('href', 'https://news.ycombinator.com/' + comments_href);
+  }
 
   var date = links[1].innerHTML;
 
-  var site = 'Hacker News';
-  return `${link} (<code>${domain}</code> via ${site}) <br/>
+  return `${title} (${where}) <br/>
     ${score}, ${comments_el.outerHTML} - ${date}`;
 }
 
