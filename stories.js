@@ -67,7 +67,7 @@ function hackerNewsHtml() {
 
   var date = links[1].innerHTML;
 
-  return `${title} (<code>${where}) <br/>
+  return `${title} (${where}) <br/>
     ${score}, ${comments_el.outerHTML} - ${date}`;
 }
 
