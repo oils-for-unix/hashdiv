@@ -124,8 +124,9 @@ if (links) {
   console.log(links);
   document.body.insertAdjacentHTML('afterbegin', links);
 
-  var post_url = "http://dr.shxa.org/hashdiv/paste";
-  var post_url = "http://localhost:5000/paste";
+  // note: only https is valid
+  var post_url = "https://dr.shxa.org/hashdiv/paste";
+  // var post_url = "http://localhost:5000/paste";
 
   var form = `
   <p>
