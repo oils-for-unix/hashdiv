@@ -1,4 +1,5 @@
 RewriteEngine On
 RewriteBase /hashdiv
 RewriteRule ^dispatch\.fcgi/ - [L]
-RewriteRule ^(.*)$ dispatch.fcgi/$1 [L]
+# only redirect top level
+RewriteRule ^([^/]+)$ dispatch.fcgi/$1 [L]
