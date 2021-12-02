@@ -44,7 +44,7 @@ function hackerNewsHtml() {
   var title = '';
   var where = '';
 
-  var title_el = document.querySelector('a.storylink')
+  var title_el = document.querySelector('a.titlelink')
   var domain_el = document.querySelector('span.sitestr');
 
   if (domain_el) {
