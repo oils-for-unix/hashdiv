@@ -7,7 +7,18 @@ set -o nounset
 set -o pipefail
 set -o errexit
 
+deps() {
+  sudo apt-get install python3-venv  # Ubuntu 18.04 needs this
+}
+
+# Similar to dreamhost
+create-venv() {
+  python3 -m venv _venv
+}
+
 # Requires virtualenv to be active
+#
+# . _venv/bin/activate
 serve() {
   FLASK_ENV=development FLASK_APP=main.py flask run
 }
