@@ -72,7 +72,7 @@ def delete_pastes():
 def post_paste():
   """For scraping in JavaScript and posting here
 
-  TODO: Acceptin user data is HTML injection; we want a password.
+  TODO: Accepting user data is HTML injection; we want a password.
 
   Or really we only care about a few tags like <a> <span>, etc.
   """

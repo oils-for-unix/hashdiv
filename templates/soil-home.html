@@ -1,0 +1,22 @@
+{% extends "soil-layout.html" %}
+
+{% block title %}Soil Receive{% endblock %}
+
+{% block content %}
+
+<form action="upload" method="post" enctype="multipart/form-data">
+  <table>
+    <tr>
+      <td>File</td>
+      <td><input type="file" name="files[]" multiple="multiple"/></td>
+    </tr>
+
+    <tr>
+      <td></td>
+      <td><input type="submit" value="Upload" /></td>
+    </tr>
+  </table>
+
+</form>
+
+{% endblock %}
