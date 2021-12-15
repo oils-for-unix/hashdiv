@@ -1,4 +1,4 @@
 #!/bin/sh
-dir=/home/chubot/git/oilshell/hashdiv
+dir=$HOME/git/oilshell/hashdiv
 . $dir/_venv/bin/activate
-exec python3.9 $dir/dispatch.py
+exec python3.9 $dir/soil_dispatch.py
