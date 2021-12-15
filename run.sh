@@ -20,7 +20,7 @@ create-venv() {
 #
 # . _venv/bin/activate
 serve-hashdiv() {
-  FLASK_ENV=development FLASK_APP=main.py flask run
+  FLASK_ENV=development FLASK_APP=hashdiv.py flask run
 }
 
 serve-soil-receive() {
