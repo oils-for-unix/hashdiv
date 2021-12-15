@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteBase /soil-receive
+RewriteRule ^dispatch\.fcgi/ - [L]
+# For serving files from upload/.  (Does this make every request slower?)
+RewriteCond %{REQUEST_FILENAME} !-f
+# only redirect top level
+RewriteRule ^(.*)$ dispatch.fcgi/$1 [L]

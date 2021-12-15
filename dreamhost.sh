@@ -26,17 +26,24 @@ py-deps() {
   pip3 install 'flask==1.1.2' 'flup==1.0.3'
 }
 
-deploy() {
+hashdiv-dirs() {
+  mkdir --verbose -p upload/{tmp,paste}
+}
+
+deploy-hashdiv() {
   local dir=~/dr.shxa.org/hashdiv
   mkdir -p $dir
   cp -v .htaccess dispatch.fcgi $dir
   
   cd $dir
-  setup-dirs
+  hashdiv-dirs
 }
 
-setup-dirs() {
-  mkdir --verbose -p upload/{tmp,paste}
+deploy-soil() {
+  local dir=~/builds.oilshell.org/soil-receive
+  mkdir -p $dir
+  cp -v soil_htaccess soil_dispatch.fcgi $dir
+  cd $dir
 }
 
 "$@"
