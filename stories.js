@@ -39,20 +39,23 @@ function lobstersHtml() {
 
 function hackerNewsHtml() {
   var subtext = document.querySelector('td.subtext');
-  var score = subtext.querySelector('span').innerHTML;
+  var score = subtext.querySelector('span.score').innerHTML;
 
-  var title = '';
+  var title_el = document.querySelector('span.titleline a');  // link inside span
+  var title_href = title_el.getAttribute('href');
+  if (title_href.indexOf('//news.ycombinator.com') === -1) {
+    title_el.setAttribute('href', 'https://news.ycombinator.com/' + title_href);
+  }
+  var title = title_el.outerHTML;
+
   var where = '';
-
-  var title_el = document.querySelector('span.titleline');
   var domain_el = document.querySelector('span.sitestr');
-
+  
   if (domain_el) {
-    title = title_el.outerHTML;
     domain = domain_el.innerHTML; 
     where = `<code>${domain}</code> via Hacker News`;
   } else {
-    title = title_el.innerHTML;
+
     where = 'self';    
   }
 
