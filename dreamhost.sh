@@ -23,7 +23,16 @@ py-deps() {
   . _venv/bin/activate
 
   # Versions as of 1/2/2021
-  pip3 install 'flask==1.1.2' 'flup==1.0.3'
+  # pip3 install 'flask==1.1.2' #'flup==1.0.3'
+  #
+  # 2024:
+  # no flup?
+  # Jinja version broke
+  # I never used a lock file!  Gah
+  # DId Pip have it?
+
+  python3 -m pip install flask
+  #python3 -m pip install 'flask == 1.1.2'
 }
 
 hashdiv-dirs() {
