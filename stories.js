@@ -128,7 +128,8 @@ if (links) {
   document.body.insertAdjacentHTML('afterbegin', links);
 
   // note: only https is valid
-  var post_url = "https://dr.shxa.org/hashdiv/paste";
+  var post_url = "http://hashdiv.oils.pub/paste";
+  //var post_url = "https://dr.shxa.org/hashdiv/paste";
   // var post_url = "http://localhost:5000/paste";
 
   var form = `
