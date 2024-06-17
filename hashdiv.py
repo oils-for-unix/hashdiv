@@ -29,6 +29,16 @@ def home():
   return render_template('home.html')
 
 
+@app.route('/hashdiv/')
+def test_home():
+  """
+  uwsgi test.  It doesn't add a URL prefix in the same way that the Apache
+  mod_fcgid does.
+  """
+  app.logger.debug('hashdiv')
+  return render_template('home.html')
+
+
 @app.route('/upload/paste/<path:path>')
 def get_paste(path):
   return send_from_directory('upload/paste', path)

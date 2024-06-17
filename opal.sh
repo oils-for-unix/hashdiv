@@ -17,7 +17,9 @@ pip-install() {
 deploy() {
   # It's just one file
 
-  cp -v hashdiv.py ~/apps/hashdiv/myapp
+  local dest=~/apps/hashdiv/myapp
+
+  cp -v -R -t $dest templates static hashdiv.py
 }
 
 start() {
@@ -29,11 +31,16 @@ stop() {
 }
 
 logs() {
-  tail -f ~/logs/apps/hashdiv/uwsgi.log
+  #tail -f ~/logs/apps/hashdiv/uwsgi.log
+  less ~/logs/apps/hashdiv/uwsgi.log
 }
 
 backup-config() {
   cp -v ~/apps/hashdiv/uwsgi.ini .
+}
+
+demo() {
+  curl --include https://op.oils.pub/hashdiv/
 }
 
 "$@"
