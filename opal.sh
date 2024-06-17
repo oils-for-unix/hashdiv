@@ -32,4 +32,8 @@ logs() {
   tail -f ~/logs/apps/hashdiv/uwsgi.log
 }
 
+backup-config() {
+  cp -v ~/apps/hashdiv/uwsgi.ini .
+}
+
 "$@"
