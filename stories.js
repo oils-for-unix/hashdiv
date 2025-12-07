@@ -7,7 +7,8 @@ function htmlToElement(html) {
 }
 
 function lobstersHtml() {
-  var score = document.querySelector('.score').innerHTML;
+  //var score = document.querySelector('.score').innerHTML;
+  var score = document.querySelector('.upvoter').innerHTML;
 
   var title = '';
   var where = '';
@@ -30,7 +31,7 @@ function lobstersHtml() {
     comments_el.setAttribute('href', 'https://lobste.rs' + comments_href);
   }
 
-  var submission_time = document.querySelector('div.byline span[title]').title;
+  var submission_time = document.querySelector('div.byline time').title;
   var date = submission_time.split(' ')[0];
 
   return `${title} (${where}) <br/>
@@ -128,8 +129,8 @@ if (links) {
   document.body.insertAdjacentHTML('afterbegin', links);
 
   // note: only https is valid
-  var post_url = "https://hashdiv.oils.pub/paste";
-  //var post_url = "https://dr.shxa.org/hashdiv/paste";
+  //var post_url = "https://hashdiv.oils.pub/paste";
+  var post_url = "https://dr.shxa.org/hashdiv/paste";
   // var post_url = "http://localhost:5000/paste";
 
   var form = `
